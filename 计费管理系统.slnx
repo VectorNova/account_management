@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="人机接口/人机接口.vcxproj" Id="bb7bfbe6-1b18-4ab2-8da8-f618b1b51d92" />
+</Solution>
