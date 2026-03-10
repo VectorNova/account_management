@@ -21,12 +21,18 @@
     <ClCompile Include="menu.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="service.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="model.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="menu.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="service.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
