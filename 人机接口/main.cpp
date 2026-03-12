@@ -8,7 +8,7 @@ using namespace std;
 
 int main()
 {
-	SetConsoleOutputCP(CP_UTF8);
+	SetConsoleOutputCP(CP_UTF8);   //使中文输出不出现乱码
 	OutputMenu();
 	return 0;
 }

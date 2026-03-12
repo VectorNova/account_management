@@ -38,5 +38,8 @@
     <ClInclude Include="..\公共头文件（数据结构）\model.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\业务逻辑\card_service.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

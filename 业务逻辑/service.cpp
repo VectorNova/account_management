@@ -1,12 +1,13 @@
 #include "service.h"
+#include "card_service.h"
 #include<iostream>
 using namespace std;
 
 //处理业务函数
 void do_service(int choice) {
 	switch (choice) {
-	case 1:cout << "添加卡" << endl << endl; break;
-	case 2:cout << "查询卡" << endl << endl; break;
+	case 1:adding_card(); break;
+	case 2:searching_card(); break;
 	case 3:cout << "上机" << endl << endl; break;
 	case 4:cout << "下机" << endl << endl; break;
 	case 5:cout << "充值" << endl << endl; break;
