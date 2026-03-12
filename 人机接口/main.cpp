@@ -2,7 +2,7 @@
 #include<cstdlib>
 #include<iostream>
 #include<windows.h>
-#include "model.h"
+#include "../公共头文件（数据结构）/model.h"
 #include "menu.h"
 using namespace std;
 
@@ -13,4 +13,3 @@ int main()
 	return 0;
 }
 
-//测试
