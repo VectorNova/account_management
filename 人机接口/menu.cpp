@@ -1,4 +1,5 @@
 #include<iostream>
+#include<string>
 #include "menu.h"
 #include "../业务逻辑/service.h"
 using namespace std;
@@ -16,11 +17,11 @@ void main_menu() {
 void OutputMenu()
 {
 	cout << "欢迎进入计费管理系统" << endl;
-	int choice;
+	string choice;
 	while (true) {
 		main_menu();
 		cin >> choice;
-		if (choice == 0) break;
+		if (choice == "0") break;
 		do_service(choice);
 	}
 }

@@ -14,6 +14,11 @@ void adding_card() {
     // 读取卡号
     cout << "请输入卡号（长度为1~18）：";
     cin >> card_new->data.aName;
+    if (card_new->data.aName.size() > 18) {
+        cout << "卡号超长" << endl;
+        delete card_new;
+        return;
+    }
 
     // 检查是否有重复卡
     card_node* ptr = card_head;
@@ -29,6 +34,23 @@ void adding_card() {
         return;
     }
 
+    // 继续读取其它信息
+    cout << "请输入密码（长度为1~8）：";     //添加密码
+    cin >> card_new->data.aPwd;
+    if (card_new->data.aPwd.size() > 8) {
+        cout << "密码超长" << endl;
+        delete card_new;
+        return;
+    }
+    cout << "请输入开卡金额（RMB）：";       //添加初始金额
+    cin >> card_new->data.fBalance;
+    card_new->data.nStatus = 0;            //添加使用状态
+    card_new->data.nUseCount = 0;          //添加使用次数
+    card_new->data.fTotalUse = 0.0;        //添加累计使用
+    card_new->data.tStart = time(NULL);    //添加开卡时间为当前系统时间
+    card_new->data.tLast = card_new->data.tStart;
+    card_new->data.nDel = 0;               //添加删除标志
+
     // 插入到链表末尾或作为头节点
     if (card_head == NULL) {
         card_head = card_new;
@@ -40,18 +62,6 @@ void adding_card() {
         ptr->next = card_new;
         card_new->next = NULL;
     }
-
-    // 继续读取其它信息
-    cout << "请输入密码（长度为1~8）：";     //添加密码
-    cin >> card_new->data.aPwd;
-    cout << "请输入开卡金额（RMB）：";       //添加初始金额
-    cin >> card_new->data.fBalance;
-    card_new->data.nStatus = 0;            //添加使用状态
-    card_new->data.nUseCount = 0;          //添加使用次数
-    card_new->data.fTotalUse = 0.0;        //添加累计使用
-    card_new->data.tStart = time(NULL);    //添加开卡时间为当前系统时间
-    card_new->data.tLast = card_new->data.tStart;
-    card_new->data.nDel = 0;               //添加删除标志
 
     //显示添加的卡信息
     cout << endl << "-----添加的卡信息如下-----" << endl;
@@ -85,6 +95,12 @@ void searching_card() {
         cout << "没有该卡的信息！" << endl << endl;
         return;
     }
+
+    //检测密码是否正确
+    string cardpwd;
+    cout << "请输入密码：";
+    cin >> cardpwd;
+    if (cardpwd != ptr->data.aPwd) { cout << "密码错误" << endl << endl; return; }
 
     //输出卡的信息
     cout << endl << setw(10) << "卡号" 
