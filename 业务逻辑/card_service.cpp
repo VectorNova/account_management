@@ -56,10 +56,14 @@ void adding_card() {
     //显示添加的卡信息
     cout << endl << "-----添加的卡信息如下-----" << endl;
     cout << left;     //左对齐
-    cout << setw(10) << "卡号" << setw(10) << "密码" << 
-        setw(10) << "状态" << setw(10) << "金额" << endl;
-    cout << setw(10) << card_new->data.aName << setw(10) << card_new->data.aPwd <<
-        setw(10) << card_new->data.nStatus << setw(10) << card_new->data.fBalance << endl << endl;
+    cout << setw(10) << "卡号" 
+        << setw(10) << "密码" 
+        << setw(10) << "状态" 
+        << setw(10) << "金额" << endl;
+    cout << setw(10) << card_new->data.aName 
+        << setw(10) << card_new->data.aPwd 
+        <<setw(10) << card_new->data.nStatus 
+        << setw(10) << card_new->data.fBalance << endl << endl;
     return;
 }
 
@@ -83,9 +87,17 @@ void searching_card() {
     }
 
     //输出卡的信息
-    cout << endl << setw(10) << "卡号" << setw(10) << "状态" << setw(10) << "余额" << setw(10) <<
-        "累计使用" << setw(10) << "使用次数" << setw(10) << "上次使用时间" << endl;
-    cout << setw(10) << ptr->data.aName << setw(10) << ptr->data.nStatus << setw(10) << ptr->data.fBalance << setw(10) <<
-        ptr->data.fTotalUse << setw(10) << ptr->data.nUseCount << setw(10) << ptr->data.tLast << endl;
+    cout << endl << setw(10) << "卡号" 
+        << setw(10) << "状态" 
+        << setw(10) << "余额" 
+        << setw(20) <<"累计使用"
+        << setw(20) << "使用次数" 
+        << setw(20) << "上次使用时间" << endl;
+    cout << setw(10) << ptr->data.aName 
+        << setw(10) << ptr->data.nStatus 
+        << setw(10) << ptr->data.fBalance 
+        << setw(10) <<ptr->data.fTotalUse 
+        << setw(20) << ptr->data.nUseCount 
+        << setw(10) << ptr->data.tLast << endl << endl;
     return;
 }
