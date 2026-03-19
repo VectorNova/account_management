@@ -2,6 +2,8 @@
 #include<string>
 #include "menu.h"
 #include "../业务逻辑/service.h"
+#include "../业务逻辑/card_service.h"
+#include "../数据管理/card_file.h"
 using namespace std;
 
 //显示主菜单函数
@@ -17,6 +19,7 @@ void main_menu() {
 void OutputMenu()
 {
 	cout << "欢迎进入计费管理系统" << endl;
+    load_cards_to_node(card_head);
 	string choice;
 	while (true) {
 		main_menu();

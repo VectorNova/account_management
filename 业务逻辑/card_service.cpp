@@ -1,8 +1,20 @@
 #include "../公共头文件（数据结构）/model.h"
 #include "card_service.h"
+#include "../数据管理/card_file.h"
 #include<iostream>
-#include<iomanip>   //为了使输出左对齐
+#include<iomanip>
+#include<sstream>
+#include<ctime>
 using namespace std;
+
+static string current_date_string() {
+    time_t now = time(NULL);
+    tm localTm = {};
+    localtime_s(&localTm, &now);
+    ostringstream oss;
+    oss << put_time(&localTm, "%Y-%m-%d");
+    return oss.str();
+}
 
 card_node* card_head = NULL;
 
@@ -12,7 +24,7 @@ void adding_card() {
     card_node* card_new = new card_node;
 
     // 读取卡号
-    cout << "请输入卡号（长度为1~18）：";
+    cout << "请输入卡号（长度为1~18）：__________________\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
     cin >> card_new->data.aName;
     if (card_new->data.aName.size() > 18) {
         cout << "卡号超长" << endl;
@@ -35,7 +47,7 @@ void adding_card() {
     }
 
     // 继续读取其它信息
-    cout << "请输入密码（长度为1~8）：";     //添加密码
+    cout << "请输入密码（长度为1~8）：________\b\b\b\b\b\b\b\b";     //添加密码
     cin >> card_new->data.aPwd;
     if (card_new->data.aPwd.size() > 8) {
         cout << "密码超长" << endl;
@@ -47,8 +59,10 @@ void adding_card() {
     card_new->data.nStatus = 0;            //添加使用状态
     card_new->data.nUseCount = 0;          //添加使用次数
     card_new->data.fTotalUse = 0.0;        //添加累计使用
-    card_new->data.tStart = time(NULL);    //添加开卡时间为当前系统时间
-    card_new->data.tLast = card_new->data.tStart;
+    string nowDate = current_date_string();
+    card_new->data.tStart = nowDate;       //添加开卡时间为当前系统时间
+    card_new->data.tEnd = nowDate;         //开卡截止期默认当前时间
+    card_new->data.tLast = nowDate;        //最后使用时间默认当前时间
     card_new->data.nDel = 0;               //添加删除标志
 
     // 插入到链表末尾或作为头节点
@@ -65,15 +79,17 @@ void adding_card() {
 
     //显示添加的卡信息
     cout << endl << "-----添加的卡信息如下-----" << endl;
-    cout << left;     //左对齐
-    cout << setw(10) << "卡号" 
-        << setw(10) << "密码" 
-        << setw(10) << "状态" 
-        << setw(10) << "金额" << endl;
-    cout << setw(10) << card_new->data.aName 
-        << setw(10) << card_new->data.aPwd 
-        <<setw(10) << card_new->data.nStatus 
-        << setw(10) << card_new->data.fBalance << endl << endl;
+    cout << "卡号\t" 
+        << "密码\t" 
+        << "状态\t" 
+        << "金额\t" << endl;
+    cout << card_new->data.aName << '\t'
+        << card_new->data.aPwd << '\t'
+        << card_new->data.nStatus << '\t'
+        << card_new->data.fBalance << endl << endl;
+
+	//将卡信息存入文件
+    save_cards_to_file(card_head);
     return;
 }
 
@@ -81,7 +97,7 @@ void adding_card() {
 void searching_card() {
     cout << endl << "----------查询卡----------" << endl;
     string cardnum;
-    cout << "请输入查询的卡号（长度为1~18）：";
+    cout << "请输入查询的卡号（长度为1~18）：__________________\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
     cin >> cardnum;
 
     //查询卡是否存在
@@ -98,22 +114,27 @@ void searching_card() {
 
     //检测密码是否正确
     string cardpwd;
-    cout << "请输入密码：";
+    cout << "请输入密码（长度为1~8）：________\b\b\b\b\b\b\b\b";
     cin >> cardpwd;
     if (cardpwd != ptr->data.aPwd) { cout << "密码错误" << endl << endl; return; }
 
     //输出卡的信息
-    cout << endl << setw(10) << "卡号" 
-        << setw(10) << "状态" 
-        << setw(10) << "余额" 
-        << setw(20) <<"累计使用"
-        << setw(20) << "使用次数" 
-        << setw(20) << "上次使用时间" << endl;
-    cout << setw(10) << ptr->data.aName 
-        << setw(10) << ptr->data.nStatus 
-        << setw(10) << ptr->data.fBalance 
-        << setw(10) <<ptr->data.fTotalUse 
-        << setw(20) << ptr->data.nUseCount 
-        << setw(10) << ptr->data.tLast << endl << endl;
+    cout << endl << "卡号\t"
+        << "状态\t"
+        << "余额\t"
+        << "累计使用\t"
+        << "使用次数\t"
+        << "上次使用时间\t" << endl;
+    cout << ptr->data.aName << '\t'
+        << ptr->data.nStatus << '\t'
+        << ptr->data.fBalance << '\t'
+        << ptr->data.fTotalUse << "\t\t"
+        << ptr->data.nUseCount << "\t\t";
+    if (!ptr->data.tLast.empty()) {
+        cout << ptr->data.tLast;
+    } else {
+        cout << "-";
+    }
+    cout << endl << endl;
     return;
 }
