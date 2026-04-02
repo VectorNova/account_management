@@ -33,6 +33,12 @@
     <ClCompile Include="..\业务逻辑\billing_service.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\数据管理\billing_file.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\业务逻辑\money_service.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="menu.h">
@@ -51,6 +57,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\业务逻辑\billing_service.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\数据管理\billing_file.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\业务逻辑\money_service.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

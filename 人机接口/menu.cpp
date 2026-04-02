@@ -4,6 +4,8 @@
 #include "../业务逻辑/service.h"
 #include "../业务逻辑/card_service.h"
 #include "../数据管理/card_file.h"
+#include "../业务逻辑/billing_service.h"
+#include "../数据管理/billing_file.h"
 using namespace std;
 
 //显示主菜单函数
@@ -20,9 +22,12 @@ void OutputMenu()
 {
 	cout << "欢迎进入计费管理系统" << endl;
 
-	//读取文件到链表（文本文件或二进制文件）
-    load_cards_to_node(card_head);
-	//load_cards_to_node_binary(card_head);
+	//读取卡信息文件到链表（文本文件或二进制文件）
+    load_cards_to_node(&card_head);
+	//load_cards_to_node_binary(&card_head);
+
+	//读取计费信息文件到链表
+    load_billing_to_node(&billing_head);
 
 	string choice;
 	while (true) {

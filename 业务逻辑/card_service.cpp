@@ -12,7 +12,7 @@ static string format_time_string(time_t value) {
     tm localTm = {};
     localtime_s(&localTm, &value);
     ostringstream oss;
-    oss << put_time(&localTm, "%Y-%m-%d %H:%M");
+    oss << put_time(&localTm, "%Y-%m-%d %H:%M:%S");
     return oss.str();
 }
 

@@ -2,6 +2,8 @@
 #include "card_file.h"
 #include<fstream>
 #include<iostream>
+#include<string>
+#include<vector>
 using namespace std;
 
 //二进制文件存储字符串辅助函数
@@ -23,7 +25,7 @@ static bool read_string_binary(ifstream& in, string& value) {
 //将卡信息存入文件
 void save_cards_to_file(card_node* head) {
 	ofstream fout;
-	fout.open("card_data.txt");
+  fout.open("card_data.txt");
 	if (!fout.is_open()) return;
 	card_node* ptr = head;
     while (ptr != nullptr) {
@@ -47,7 +49,7 @@ void save_cards_to_file(card_node* head) {
 //将卡的信息存入文件（二进制文件）
 void save_cards_to_file_binary(card_node* head) {
 	ofstream bout;
-	bout.open("card_data.bin", ios::binary | ios::trunc);
+    bout.open("card_data.bin");
 	if (!bout.is_open()) return;
 
 	for (card_node* ptr = head; ptr != nullptr; ptr = ptr->next) {
@@ -66,56 +68,65 @@ void save_cards_to_file_binary(card_node* head) {
 }
 
 //读取卡信息到链表
-void load_cards_to_node(card_node* & head) {
+void load_cards_to_node(card_node** head) {
   ifstream fin;
   fin.open("card_data.txt");
   if (!fin.is_open()) return;
 
-  head = nullptr;
+  *head = nullptr;
   card_node* tail = nullptr;
 
-  string aName;
-  string aPwd;
-  int nStatus;
-  string tStartStr;
-  string tEndStr;
-  float fTotalUse;
-  string tLastStr;
-  int nUseCount;
-  float fBalance;
-  int nDel;
+	string line;
+	while (getline(fin, line)) {
+		if (line.empty()) continue;
 
-  while (fin >> aName >> aPwd >> nStatus >> tStartStr >> tEndStr >> fTotalUse >> tLastStr >> nUseCount >> fBalance >> nDel) {
-	  card_node* node = new card_node;
-	  node->data.aName = aName;
-	  node->data.aPwd = aPwd;
-	  node->data.nStatus = nStatus;
-     node->data.tStart = (tStartStr == "-" ? "" : tStartStr);
-	  node->data.tEnd = (tEndStr == "-" ? "" : tEndStr);
-	  node->data.fTotalUse = fTotalUse;
-   node->data.tLast = (tLastStr == "-" ? "" : tLastStr);
-	  node->data.nUseCount = nUseCount;
-	  node->data.fBalance = fBalance;
-	  node->data.nDel = nDel;
-	  node->next = nullptr;
+		vector<string> parts;
+		parts.reserve(10);
+		size_t start = 0;
+		while (true) {
+			size_t pos = line.find('\t', start);
+			if (pos == string::npos) {
+				parts.push_back(line.substr(start));
+				break;
+			}
+			parts.push_back(line.substr(start, pos - start));
+			start = pos + 1;
+		}
+		if (parts.size() != 10) continue;
 
-	  if (head == nullptr) {
-		  head = node;
-		  tail = node;
-	  } else {
-		  tail->next = node;
-		  tail = node;
-	  }
-  }
+		card_node* node = new card_node;
+		node->data.aName = parts[0];
+		node->data.aPwd = parts[1];
+		node->data.nStatus = stoi(parts[2]);
+		node->data.tStart = (parts[3] == "-" ? "" : parts[3]);
+		node->data.tEnd = (parts[4] == "-" ? "" : parts[4]);
+		node->data.fTotalUse = stod(parts[5]);
+		node->data.tLast = (parts[6] == "-" ? "" : parts[6]);
+		node->data.nUseCount = stoi(parts[7]);
+		node->data.fBalance = stod(parts[8]);
+		node->data.nDel = stoi(parts[9]);
+		node->next = nullptr;
+
+      if (*head == nullptr) {
+			*head = node;
+			tail = node;
+		}
+		else {
+			tail->next = node;
+			tail = node;
+		}
+	}
+
+	return;
 }
 
 //读取卡信息到链表（二进制文件）
-void load_cards_to_node_binary(card_node*& head) {
+void load_cards_to_node_binary(card_node** head) {
 	ifstream bin;
-	bin.open("card_data.bin", ios::binary);
+  bin.open("card_data.bin");
 	if (!bin.is_open()) return;
 
-	head = nullptr;
+ *head = nullptr;
 	card_node* tail = nullptr;
 
 	while (true) {
@@ -154,8 +165,8 @@ void load_cards_to_node_binary(card_node*& head) {
 		node->data.nDel = nDel;
 		node->next = nullptr;
 
-		if (head == nullptr) {
-			head = node;
+      if (*head == nullptr) {
+			*head = node;
 			tail = node;
 		}
 		else {
