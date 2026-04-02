@@ -19,7 +19,11 @@ void main_menu() {
 void OutputMenu()
 {
 	cout << "欢迎进入计费管理系统" << endl;
+
+	//读取文件到链表（文本文件或二进制文件）
     load_cards_to_node(card_head);
+	//load_cards_to_node_binary(card_head);
+
 	string choice;
 	while (true) {
 		main_menu();

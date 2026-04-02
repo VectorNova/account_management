@@ -5,15 +5,19 @@
 #include<iomanip>
 #include<sstream>
 #include<ctime>
+#include<vector>
 using namespace std;
 
-static string current_date_string() {
-    time_t now = time(NULL);
+static string format_time_string(time_t value) {
     tm localTm = {};
-    localtime_s(&localTm, &now);
+    localtime_s(&localTm, &value);
     ostringstream oss;
-    oss << put_time(&localTm, "%Y-%m-%d");
+    oss << put_time(&localTm, "%Y-%m-%d %H:%M");
     return oss.str();
+}
+
+static string current_date_string() {
+    return format_time_string(time(NULL));
 }
 
 card_node* card_head = NULL;
@@ -59,10 +63,16 @@ void adding_card() {
     card_new->data.nStatus = 0;            //添加使用状态
     card_new->data.nUseCount = 0;          //添加使用次数
     card_new->data.fTotalUse = 0.0;        //添加累计使用
-    string nowDate = current_date_string();
+ time_t now = time(NULL);
+    string nowDate = format_time_string(now);
+    tm endTm = {};
+    localtime_s(&endTm, &now);
+    endTm.tm_year += Card_Life;
+    time_t endTime = mktime(&endTm);
+    string endDate = format_time_string(endTime);
     card_new->data.tStart = nowDate;       //添加开卡时间为当前系统时间
-    card_new->data.tEnd = nowDate;         //开卡截止期默认当前时间
-    card_new->data.tLast = nowDate;        //最后使用时间默认当前时间
+    card_new->data.tEnd = endDate;         //开卡截止期默认当前时间 + Card_Life 年
+    card_new->data.tLast = nowDate;        //最后使用时间默认当前系统时间
     card_new->data.nDel = 0;               //添加删除标志
 
     // 插入到链表末尾或作为头节点
@@ -100,25 +110,51 @@ void searching_card() {
     cout << "请输入查询的卡号（长度为1~18）：__________________\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
     cin >> cardnum;
 
-    //查询卡是否存在
+    //模糊查询：匹配包含输入内容的卡号
+    vector<card_node*> matches;
     card_node* ptr = card_head;
-    bool is_exist = false;
     while (ptr != NULL) {
-        if (cardnum == ptr->data.aName) { is_exist = true; break; }
+        if (ptr->data.aName.find(cardnum) != string::npos) {
+            matches.push_back(ptr);
+        }
         ptr = ptr->next;
     }
-    if (!is_exist) {
+    if (matches.empty()) {
         cout << "没有该卡的信息！" << endl << endl;
         return;
     }
 
-    //检测密码是否正确
+    if (matches.size() > 1) {
+        cout << endl << "卡号\t"
+            << "状态\t"
+            << "余额\t"
+            << "累计使用\t"
+            << "使用次数\t"
+            << "上次使用时间\t" << endl;
+        for (auto* node : matches) {
+            cout << node->data.aName << '\t'
+                << node->data.nStatus << '\t'
+                << node->data.fBalance << '\t'
+                << node->data.fTotalUse << "\t\t"
+                << node->data.nUseCount << "\t\t";
+            if (!node->data.tLast.empty()) {
+                cout << node->data.tLast;
+            } else {
+                cout << "-";
+            }
+            cout << endl;
+        }
+        cout << endl;
+        return;
+    }
+
+    //仅匹配一张卡时，继续验证密码并输出
+    ptr = matches.front();
     string cardpwd;
     cout << "请输入密码（长度为1~8）：________\b\b\b\b\b\b\b\b";
     cin >> cardpwd;
     if (cardpwd != ptr->data.aPwd) { cout << "密码错误" << endl << endl; return; }
 
-    //输出卡的信息
     cout << endl << "卡号\t"
         << "状态\t"
         << "余额\t"

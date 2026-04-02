@@ -1,5 +1,6 @@
 #include "service.h"
 #include "card_service.h"
+#include "billing_service.h"
 #include<iostream>
 #include<string>
 using namespace std;
@@ -8,7 +9,7 @@ using namespace std;
 void do_service(const string& choice) {
 	if (choice == "1") adding_card();
 	else if (choice == "2") searching_card();
-	else if (choice == "3") cout << "上机" << endl << endl;
+	else if (choice == "3") log_on();
 	else if (choice == "4") cout << "下机" << endl << endl;
 	else if (choice == "5") cout << "充值" << endl << endl;
 	else if (choice == "6") cout << "退费" << endl << endl;
