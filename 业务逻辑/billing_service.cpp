@@ -59,6 +59,12 @@ void log_on()
 		}
 	}
 
+	//检测卡是否已注销/已删除
+	if (ptr->data.nStatus == 2 || ptr->data.nDel == 1) {
+		cout << "\n该卡已注销！\n\n";
+		return;
+	}
+
 	//检测卡状态是否在上机
 	if (ptr->data.nStatus == 1) {
 		cout << "\n该卡正在上机！\n\n";

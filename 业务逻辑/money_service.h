@@ -2,6 +2,8 @@
 #define MONEY_SERVICE
 #include "../公共头文件（数据结构）/model.h"
 
+extern money_node* money_head;
+
 //充值
 void recharge();
 //退费

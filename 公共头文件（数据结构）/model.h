@@ -41,4 +41,19 @@ typedef struct billing_node {
 	struct billing_node* next;        //链表的下一项
 }billing_node;
 
+//充值退费(注销)信息
+typedef struct money {
+	int nStatus;         //充值还是退费（0-退费；1-充值；2-注销)
+	string aCardName;    //卡号
+	string time;         //充值退费时间
+	double amount;       //充值退费金额
+	double fBalance;     //卡的余额
+}money;
+
+//充值退费信息链表
+typedef struct money_node {
+	money data;
+	struct money_node* next;
+}money_node;
+
 #endif

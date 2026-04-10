@@ -6,6 +6,8 @@
 #include "../数据管理/card_file.h"
 #include "../业务逻辑/billing_service.h"
 #include "../数据管理/billing_file.h"
+#include "../业务逻辑/money_service.h"
+#include "../数据管理/money_file.h"
 using namespace std;
 
 //显示主菜单函数
@@ -28,6 +30,9 @@ void OutputMenu()
 
 	//读取计费信息文件到链表
     load_billing_to_node(&billing_head);
+
+	//读取充值退费信息文件到链表
+	load_money_to_node(&money_head);
 
 	string choice;
 	while (true) {
