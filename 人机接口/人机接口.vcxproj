@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="..\业务逻辑\billing_service.cpp" />
     <ClCompile Include="..\业务逻辑\card_service.cpp" />
+    <ClCompile Include="..\业务逻辑\manager_service.cpp" />
     <ClCompile Include="..\业务逻辑\money_service.cpp" />
     <ClCompile Include="..\业务逻辑\service.cpp" />
     <ClCompile Include="..\业务逻辑\static_service.cpp" />
@@ -143,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="..\业务逻辑\billing_service.h" />
     <ClInclude Include="..\业务逻辑\card_service.h" />
+    <ClInclude Include="..\业务逻辑\manager_service.h" />
     <ClInclude Include="..\业务逻辑\money_service.h" />
     <ClInclude Include="..\业务逻辑\service.h" />
     <ClInclude Include="..\业务逻辑\static_service.h" />

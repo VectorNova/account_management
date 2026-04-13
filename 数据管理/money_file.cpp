@@ -24,13 +24,13 @@ void save_money_to_file(money_node* money_head)
 }
 
 //从文件中读取充值退费信息到链表
-void load_money_to_node(money_node* money_head)
+void load_money_to_node(money_node** money_head)
 {
     ifstream fin;
     fin.open("money_data.txt");
     if (!fin.is_open()) return;
 
-    money_head = nullptr;
+    *money_head = nullptr;
     money_node* tail = nullptr;
 
     string line;
@@ -57,8 +57,8 @@ void load_money_to_node(money_node* money_head)
         node->data.fBalance = stod(balanceStr);
         node->next = nullptr;
 
-        if (money_head == nullptr) {
-            money_head = node;
+        if (*money_head == nullptr) {
+            *money_head = node;
             tail = node;
         }
         else {

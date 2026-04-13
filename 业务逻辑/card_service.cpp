@@ -1,6 +1,8 @@
 #include "../公共头文件（数据结构）/model.h"
 #include "card_service.h"
 #include "../数据管理/card_file.h"
+#include "money_service.h"
+#include "../数据管理/money_file.h"
 #include<iostream>
 #include<iomanip>
 #include<sstream>
@@ -100,6 +102,26 @@ void adding_card() {
 
 	//将卡信息存入文件
     save_cards_to_file(card_head);
+
+    //将开卡金额写入充值退费日志（作为一条充值记录）
+    if (card_new->data.fBalance > 0) {
+        money_node* moneyNew = new money_node;
+        moneyNew->data.nStatus = 1;
+        moneyNew->data.aCardName = card_new->data.aName;
+        moneyNew->data.time = card_new->data.tStart;
+        moneyNew->data.amount = card_new->data.fBalance;
+        moneyNew->data.fBalance = card_new->data.fBalance;
+        moneyNew->next = nullptr;
+
+        if (money_head == nullptr) {
+            money_head = moneyNew;
+        } else {
+            money_node* tail = money_head;
+            while (tail->next != nullptr) tail = tail->next;
+            tail->next = moneyNew;
+        }
+        save_money_to_file(money_head);
+    }
     return;
 }
 
