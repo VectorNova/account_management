@@ -8,6 +8,8 @@
 #include "../数据管理/billing_file.h"
 #include "../业务逻辑/money_service.h"
 #include "../数据管理/money_file.h"
+#include "../业务逻辑/manager_service.h"
+#include "../数据管理/manager_file.h"
 using namespace std;
 
 //显示主菜单函数
@@ -33,6 +35,9 @@ void OutputMenu()
 
 	//读取充值退费信息文件到链表
 	load_money_to_node(&money_head);
+
+	//读取管理员密匙文件
+	load_passkey_to_file(passkey);
 
 	string choice;
 	while (true) {

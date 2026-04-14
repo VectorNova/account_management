@@ -11,7 +11,7 @@ using namespace std;
 void save_billing_to_file(billing_node* head)
 {
     ofstream fout;
-   fout.open("billing_data.txt");
+    fout.open("billing_data.txt");
     if (!fout.is_open()) return;
 
     for (billing_node* ptr = head; ptr != nullptr; ptr = ptr->next) {

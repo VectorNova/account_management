@@ -56,4 +56,10 @@ typedef struct money_node {
 	struct money_node* next;
 }money_node;
 
+//管理员链表
+typedef struct manager_node {
+	string name;
+	struct manager_node* next;
+}manager_node;
+
 #endif

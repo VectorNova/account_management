@@ -137,6 +137,7 @@
     <ClCompile Include="..\业务逻辑\static_service.cpp" />
     <ClCompile Include="..\数据管理\billing_file.cpp" />
     <ClCompile Include="..\数据管理\card_file.cpp" />
+    <ClCompile Include="..\数据管理\manager_file.cpp" />
     <ClCompile Include="..\数据管理\money_file.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="..\公共头文件（数据结构）\model.h" />
     <ClInclude Include="..\数据管理\billing_file.h" />
     <ClInclude Include="..\数据管理\card_file.h" />
+    <ClInclude Include="..\数据管理\manager_file.h" />
     <ClInclude Include="..\数据管理\money_file.h" />
     <ClInclude Include="menu.h" />
   </ItemGroup>

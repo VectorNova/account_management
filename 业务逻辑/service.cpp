@@ -3,6 +3,7 @@
 #include "billing_service.h"
 #include "money_service.h"
 #include "static_service.h"
+#include "manager_service.h"
 #include<iostream>
 #include<string>
 using namespace std;
@@ -17,6 +18,7 @@ void do_service(const string& choice) {
 	else if (choice == "6") refund();
 	else if (choice == "7") sum_up_menu();
 	else if (choice == "8") cancel_card();
+	else if (choice == passkey) manager_menu();
 	else if (choice == "0") cout << "退出" << endl << endl;
 	else cout << "错误，请再次输入" << endl << endl;
 }
