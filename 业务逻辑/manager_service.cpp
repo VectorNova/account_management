@@ -6,45 +6,38 @@
 #include "../数据管理/card_file.h"
 #include "../数据管理/billing_file.h"
 #include "../数据管理/money_file.h"
+#include "static_service.h"
 #include<iostream>
-#include<iomanip>
 #include<string>
 using namespace std;
 
 string passkey;
 manager_node* manager_head = nullptr;
 
+//列出卡信息
 static void list_cards()
 {
 	cout << "\n----------卡信息列表----------\n";
-	cout << left << setw(20) << "卡号"
-		<< setw(10) << "密码"
-		<< setw(8) << "状态"
-		<< setw(10) << "余额"
-		<< setw(12) << "累计使用"
-		<< setw(10) << "使用次数"
-		<< setw(20) << "开卡时间"
-		<< setw(20) << "截止期"
-		<< setw(20) << "最后使用"
-		<< setw(8) << "删除" << endl;
+	cout << "卡号\t密码\t状态\t余额\t累计使用\t使用次数\t开卡时间\t\t截止期\t\t\t最后使用\t\t删除" << endl;
 	if (card_head == nullptr) {
 		cout << "暂无卡信息。\n";
 		return;
 	}
 	for (card_node* node = card_head; node != nullptr; node = node->next) {
-		cout << left << setw(20) << node->data.aName
-			<< setw(10) << node->data.aPwd
-			<< setw(8) << node->data.nStatus
-			<< setw(10) << fixed << setprecision(2) << node->data.fBalance
-			<< setw(12) << fixed << setprecision(2) << node->data.fTotalUse
-			<< setw(10) << node->data.nUseCount
-			<< setw(20) << (node->data.tStart.empty() ? "-" : node->data.tStart)
-			<< setw(20) << (node->data.tEnd.empty() ? "-" : node->data.tEnd)
-			<< setw(20) << (node->data.tLast.empty() ? "-" : node->data.tLast)
-			<< setw(8) << node->data.nDel << endl;
+		cout << node->data.aName << "\t"
+			<< node->data.aPwd << "\t"
+			<< node->data.nStatus << "\t"
+			<< node->data.fBalance << "\t"
+			<< node->data.fTotalUse << "\t\t\t"
+			<< node->data.nUseCount << "\t"
+			<< (node->data.tStart.empty() ? "-" : node->data.tStart) << "\t"
+			<< (node->data.tEnd.empty() ? "-" : node->data.tEnd) << "\t"
+			<< (node->data.tLast.empty() ? "-" : node->data.tLast) << "\t"
+			<< node->data.nDel << endl;
 	}
 }
 
+//修改卡信息
 static void edit_card()
 {
 	cout << "\n----------修改卡信息----------\n";
@@ -105,32 +98,28 @@ static void edit_card()
 	cout << "修改完成。\n";
 }
 
+//列出计费信息
 static void list_billing()
 {
 	cout << "\n----------计费信息列表----------\n";
-	cout << left << setw(6) << "序号"
-		<< setw(20) << "卡号"
-		<< setw(20) << "上机时间"
-		<< setw(20) << "下机时间"
-		<< setw(10) << "消费"
-		<< setw(8) << "状态"
-		<< setw(6) << "删除" << endl;
+	cout << "序号\t卡号\t上机时间\t\t下机时间\t\t消费\t状态\t删除" << endl;
 	if (billing_head == nullptr) {
 		cout << "暂无计费信息。\n";
 		return;
 	}
 	int index = 1;
 	for (billing_node* node = billing_head; node != nullptr; node = node->next) {
-		cout << left << setw(6) << index++
-			<< setw(20) << node->data.aCardName
-			<< setw(20) << (node->data.tStart.empty() ? "-" : node->data.tStart)
-			<< setw(20) << (node->data.tEnd.empty() ? "-" : node->data.tEnd)
-			<< setw(10) << fixed << setprecision(2) << node->data.fAmount
-			<< setw(8) << node->data.nStatus
-			<< setw(6) << node->data.nDel << endl;
+		cout << index++ << "\t"
+			<< node->data.aCardName << "\t"
+			<< (node->data.tStart.empty() ? "-" : node->data.tStart) << "\t"
+			<< (node->data.tEnd.empty() ? "-" : node->data.tEnd) << "\t"
+			<< node->data.fAmount << "\t"
+			<< node->data.nStatus << "\t"
+			<< node->data.nDel << endl;
 	}
 }
 
+//给计费信息编号
 static billing_node* billing_by_index(int index)
 {
 	if (index <= 0) return nullptr;
@@ -142,6 +131,7 @@ static billing_node* billing_by_index(int index)
 	return nullptr;
 }
 
+//修改计费信息
 static void edit_billing()
 {
 	list_billing();
@@ -189,30 +179,27 @@ static void edit_billing()
 	cout << "修改完成。\n";
 }
 
+//列出充值退费信息
 static void list_money()
 {
 	cout << "\n----------充值退费信息列表----------\n";
-	cout << left << setw(6) << "序号"
-		<< setw(8) << "类型"
-		<< setw(20) << "卡号"
-		<< setw(20) << "时间"
-		<< setw(10) << "金额"
-		<< setw(10) << "余额" << endl;
+	cout << "序号\t类型\t卡号\t时间\t\t\t金额\t余额" << endl;
 	if (money_head == nullptr) {
 		cout << "暂无充值退费信息。\n";
 		return;
 	}
 	int index = 1;
 	for (money_node* node = money_head; node != nullptr; node = node->next) {
-		cout << left << setw(6) << index++
-			<< setw(8) << node->data.nStatus
-			<< setw(20) << node->data.aCardName
-			<< setw(20) << (node->data.time.empty() ? "-" : node->data.time)
-			<< setw(10) << fixed << setprecision(2) << node->data.amount
-			<< setw(10) << fixed << setprecision(2) << node->data.fBalance << endl;
+		cout << index++ << "\t"
+			<< node->data.nStatus << "\t"
+			<< node->data.aCardName << "\t"
+			<< (node->data.time.empty() ? "-" : node->data.time) << "\t"
+			<< node->data.amount << "\t"
+			<< node->data.fBalance << endl;
 	}
 }
 
+//给充值退费信息编号
 static money_node* money_by_index(int index)
 {
 	if (index <= 0) return nullptr;
@@ -224,6 +211,7 @@ static money_node* money_by_index(int index)
 	return nullptr;
 }
 
+//修改充值退费信息
 static void edit_money()
 {
 	list_money();
@@ -266,6 +254,7 @@ static void edit_money()
 	cout << "修改完成。\n";
 }
 
+//修改上机费用
 static void edit_price()
 {
 	cout << "\n----------上机费用设置----------\n";
@@ -297,8 +286,9 @@ void manager_menu()
 		cout << "3.查看管理员列表\n";
 		cout << "4.修改进入管理员菜单的密匙\n";
 		cout << "5.查看/修改数据\n";
+		cout << "6.查询统计\n";
 		cout << "0.返回计费管理系统\n";
-		cout << "请输入菜单编号(0~5):";
+		cout << "请输入菜单编号(0~6):";
 
 		//处理业务
 		string choice;
@@ -309,6 +299,7 @@ void manager_menu()
 		else if (choice == "3") manager_list();
 		else if (choice == "4") change_passkey();
 		else if (choice == "5") change_data();
+		else if (choice == "6") sum_up_menu();
 		else {
 			cout << "错误！请输入正确编号！\n";
 			continue;

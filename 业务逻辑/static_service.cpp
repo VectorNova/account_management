@@ -133,7 +133,28 @@ void sum_up_card()
 //查询统计总营业额
 void sum_up_all()
 {
-	cout << "\n----------总营业额信息如下----------\n";
+	cout << "请输入起始日期 (YYYY-MM-DD)：";
+	string start_date;
+	cin >> start_date;
+	if (start_date.size() != 10 || start_date[4] != '-' || start_date[7] != '-') {
+		cout << "输入格式错误！\n";
+		return;
+	}
+
+	cout << "请输入终止日期 (YYYY-MM-DD)：";
+	string end_date;
+	cin >> end_date;
+	if (end_date.size() != 10 || end_date[4] != '-' || end_date[7] != '-') {
+		cout << "输入格式错误！\n";
+		return;
+	}
+
+	if (start_date > end_date) {
+		cout << "起始日期不能晚于终止日期！\n";
+		return;
+	}
+
+	cout << "\n---------- " << start_date << " 到 " << end_date << " 营业额信息如下----------\n";
 	cout << "总上机金额\t" << "总充值金额\t" << "总退费金额\t" << "总盈利(充值-退费)\n";
 
 	//总营业额数据
@@ -143,18 +164,22 @@ void sum_up_all()
 	double money_profit = 0;    //总盈利（充值-退费）
 
 	//扫描上机数据
-	billing_node* billing_node = billing_head;
-	while (billing_node != nullptr) {
-		money_logon += billing_node->data.fAmount;
-		billing_node = billing_node->next;
+	billing_node* b_node = billing_head;
+	while (b_node != nullptr) {
+		if (b_node->data.tEnd >= start_date && b_node->data.tEnd.substr(0, 10) <= end_date) {
+			money_logon += b_node->data.fAmount;
+		}
+		b_node = b_node->next;
 	}
 
 	//扫描充值退费信息数据
-	money_node* money_node = money_head;
-	while (money_node != nullptr) {
-		if (money_node->data.nStatus == 1) money_charge += money_node->data.amount;
-		else if (money_node->data.nStatus == 0) money_back += money_node->data.amount;
-		money_node = money_node->next;
+	money_node* m_node = money_head;
+	while (m_node != nullptr) {
+		if (m_node->data.time >= start_date && m_node->data.time.substr(0, 10) <= end_date) {
+			if (m_node->data.nStatus == 1) money_charge += m_node->data.amount;
+			else if (m_node->data.nStatus == 0) money_back += m_node->data.amount;
+		}
+		m_node = m_node->next;
 	}
 
 	//打印信息
