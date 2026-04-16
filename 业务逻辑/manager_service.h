@@ -5,7 +5,7 @@
 
 //进入管理员菜单的密匙
 extern std::string passkey;
-//管理员列表
+//管理员列表头指针
 extern manager_node* manager_head;
 
 //管理员主菜单
@@ -20,7 +20,7 @@ void delete_manager();
 void manager_list();
 //修改进入管理员菜单的密匙
 void change_passkey();
-//修改数据
+//查看/修改数据
 void change_data();
 
 #endif

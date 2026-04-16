@@ -19,6 +19,7 @@ static string current_date_string() {
 }
 
 billing_node* billing_head = NULL;
+double price = 0.1;
 
 //上机
 void log_on()

@@ -39,6 +39,12 @@ void OutputMenu()
 	//读取管理员密匙文件
 	load_passkey_to_file(passkey);
 
+	//读取上机费用
+	load_price_to_file(price);
+
+	//读取管理员列表
+	load_manager_to_file(&manager_head);
+
 	string choice;
 	while (true) {
 		main_menu();
