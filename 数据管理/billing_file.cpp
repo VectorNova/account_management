@@ -11,7 +11,7 @@ using namespace std;
 void save_billing_to_file(billing_node* head)
 {
     ofstream fout;
-    fout.open("billing_data.txt");
+    fout.open("../数据管理/数据库/billing_data.txt");
     if (!fout.is_open()) return;
 
     for (billing_node* ptr = head; ptr != nullptr; ptr = ptr->next) {
@@ -30,7 +30,7 @@ void save_billing_to_file(billing_node* head)
 void load_billing_to_node(billing_node** head)
 {
     ifstream fin;
-    fin.open("billing_data.txt");
+    fin.open("../数据管理/数据库/billing_data.txt");
     if (!fin.is_open()) return;
 
     *head = nullptr;
