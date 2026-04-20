@@ -1,19 +1,16 @@
 #ifndef MODEL_H
 #define MODEL_H
-#include<windows.h>
-#include<time.h>
-#include<string>
-using namespace std;
+#include <string>
 
 //卡信息
 typedef struct card {
-	string aName;        //卡号
-	string aPwd;         //密码
+    std::string aName;   //卡号
+	std::string aPwd;    //密码
 	int nStatus;         //卡状态（0-未上机；1-正在上机；2-已注销）
-    string tStart;       //开卡时间
-	string tEnd;         //卡的截止期
+    std::string tStart;  //开卡时间
+	std::string tEnd;    //卡的截止期
 	double fTotalUse;    //累计使用金额
-    string tLast;        //最后使用日期
+    std::string tLast;   //最后使用日期
 	int nUseCount;       //使用次数
 	double fBalance;     //余额
 	int nDel;            //删除标识（0-未删除；1-删除）
@@ -27,9 +24,9 @@ typedef struct card_node {
 
 //计费信息
 typedef struct billing {
-	string aCardName;    //卡号
-    string tStart;       //上机时间
-	string tEnd;         //下机时间
+    std::string aCardName; //卡号
+	std::string tStart;    //上机时间
+	std::string tEnd;      //下机时间
 	double fAmount;      //消费金额
 	int nStatus;         //卡状态（0-未结算；1-已结算）
 	int nDel;            //删除标识（0-未删除；1-已删除）
@@ -44,8 +41,8 @@ typedef struct billing_node {
 //充值退费(注销)信息
 typedef struct money {
 	int nStatus;         //充值还是退费（0-退费；1-充值；2-注销)
-	string aCardName;    //卡号
-	string time;         //充值退费时间
+    std::string aCardName; //卡号
+	std::string time;      //充值退费时间
 	double amount;       //充值退费金额
 	double fBalance;     //卡的余额
 }money;
@@ -58,7 +55,7 @@ typedef struct money_node {
 
 //管理员链表
 typedef struct manager_node {
-	string name;
+    std::string name;
 	struct manager_node* next;
 }manager_node;
 
