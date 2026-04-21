@@ -65,7 +65,7 @@ void adding_card() {
     card_new->data.nStatus = 0;            //添加使用状态
     card_new->data.nUseCount = 0;          //添加使用次数
     card_new->data.fTotalUse = 0.0;        //添加累计使用
- time_t now = time(NULL);
+    time_t now = time(NULL);
     string nowDate = format_time_string(now);
     tm endTm = {};
     localtime_s(&endTm, &now);

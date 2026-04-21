@@ -163,7 +163,7 @@ void log_out()
 	// 计算费用
 	tm startTm = {};
 	istringstream startIss(target->data.tStart);
-   startIss >> get_time(&startTm, "%Y-%m-%d %H:%M:%S");
+    startIss >> get_time(&startTm, "%Y-%m-%d %H:%M:%S");
 	if (startIss.fail()) {
 		cout << "\n上机时间格式错误，无法结算！\n\n";
 		return;
