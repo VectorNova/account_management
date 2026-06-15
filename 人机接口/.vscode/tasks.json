@@ -1,0 +1,37 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe 生成活动文件",
+            "command": "D:\\mingw64\\bin\\g++.exe",
+            "args": [
+                "人机接口/main.cpp",
+                "业务逻辑/billing_service.cpp",
+                "业务逻辑/card_service.cpp",
+                "业务逻辑/manager_service.cpp",
+                "业务逻辑/money_service.cpp",
+                "业务逻辑/service.cpp",
+                "业务逻辑/static_service.cpp",
+                "数据管理/billing_file.cpp",
+                "数据管理/card_file.cpp",
+                "数据管理/manager_file.cpp",
+                "数据管理/money_file.cpp",
+                "-o",
+                "人机接口/main.exe",
+                "-g",
+                "-std=c++2a",
+                "-fexec-charset=UTF-8"
+            ],
+            "options": {
+                "cwd": "d:\\Visual Studio 2026\\Program\\计费管理系统"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "MinGW 编译器生成任务"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C/C++: g++.exe 生成和调试活动文件",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "人机接口\\main.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "d:\\Visual Studio 2026\\Program\\计费管理系统",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "miDebuggerPath": "D:\\mingw64\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "C/C++: g++.exe 生成活动文件"
+        }
+    ]
+}
